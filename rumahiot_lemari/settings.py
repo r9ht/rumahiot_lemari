@@ -19,8 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('LEMARI_SECRET_KEY','')
+# We dont need the secret key
+SECRET_KEY = 'we dont use this'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,10 +75,10 @@ WSGI_APPLICATION = 'rumahiot_lemari.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
 
 
@@ -119,3 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# RUMAH IOT LEMARI CONFIG
+
+SIDIK_TOKEN_VALIDATION_ENDPOINT = 'https://buo86czlzd.execute-api.ap-southeast-1.amazonaws.com/dev/authorize/token/validate'
+RUMAHIOT_USERS_PROFILE_TABLE = 'rumahiot_users_profile'
+RUMAHIOT_REGION = 'ap-southeast-1'
