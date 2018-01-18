@@ -1,8 +1,5 @@
 import boto3
-from uuid import uuid4
-from boto3.dynamodb.conditions import Key
 from rumahiot_lemari.settings import RUMAHIOT_REGION,RUMAHIOT_USERS_PROFILE_TABLE
-import json
 
 # DynamoDB client
 def dynamodb_client():
@@ -39,3 +36,26 @@ def update_user_profile(user_uuid,full_name,phone_number):
     )
     status = True
     return status
+
+
+# update user profile picture
+# input parameter : user_uuid(string) , profile_image(string)
+# return : status(boolean)
+def update_user_profile_picture(user_uuid,profile_picture):
+    # keep the error from breaking service by catching the client error in the view
+    status = False
+    client = dynamodb_client()
+    table = client.Table(RUMAHIOT_USERS_PROFILE_TABLE)
+    user_profile =  get_user_profile(user_uuid)
+    response = table.put_item(
+        Item={
+            'user_uuid': user_uuid,
+            'full_name': user_profile['full_name'],
+            'phone_number': user_profile['phone_number'],
+            'profile_image': profile_picture
+        }
+    )
+    status = True
+    return status
+
+

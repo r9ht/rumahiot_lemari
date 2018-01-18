@@ -126,3 +126,6 @@ STATIC_URL = '/static/'
 SIDIK_TOKEN_VALIDATION_ENDPOINT = 'https://buo86czlzd.execute-api.ap-southeast-1.amazonaws.com/dev/authorize/token/validate'
 RUMAHIOT_USERS_PROFILE_TABLE = 'rumahiot_users_profile'
 RUMAHIOT_REGION = 'ap-southeast-1'
+RUMAHIOT_UPLOAD_BUCKET = 'rumahiot-upload'
+
+

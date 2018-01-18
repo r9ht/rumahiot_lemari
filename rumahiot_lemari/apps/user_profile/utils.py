@@ -1,4 +1,4 @@
-import hashlib
+import hashlib,mimetypes,magic
 
 # return salt(string),hashed_password(string)
 # salt will be used as uuid in the user table
@@ -32,3 +32,10 @@ def success_response_generator(code,message):
         }
     }
     return response
+
+# get object file_type
+# for inmemoryuploadedfile
+
+def get_file_type(inmemoryuploadedfile):
+    return mimetypes.MimeTypes().types_map_inv[1][magic.from_buffer(inmemoryuploadedfile.read(), mime=True)][0]
+
