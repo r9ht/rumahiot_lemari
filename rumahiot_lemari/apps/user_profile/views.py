@@ -140,25 +140,6 @@ def user_profile_picture_update(request):
                                 return HttpResponse(json.dumps(response_data), content_type="application/json",
                                                     status=200)
 
-                        # print(type(form.cleaned_data['profile_image'].file.getvalue()))
-
-                        # try :
-                        #     update_status = update_user_profile_picture(user['user_uuid'], form.cleaned_data['full_name'],
-                        #                                         form.cleaned_data['phone_number'])
-                        # except :
-                        #     response_data = error_response_generator(500, "Internal server error")
-                        #     return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
-                        # else:
-                        #     # always true
-                        #     if update_status:
-                        #         response_data = success_response_generator(200, "User profile picture successfully updated")
-                        #         return HttpResponse(json.dumps(response_data), content_type="application/json",
-                        #                             status=200)
-                        #     else:
-                        #         # to catch unknown error
-                        #         response_data = error_response_generator(500, "Internal server error")
-                        #         return HttpResponse(json.dumps(response_data), content_type="application/json",
-                        #                             status=500)
                     else:
                         response_data = error_response_generator(400,"Invalid or missing parameter submitted")
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)

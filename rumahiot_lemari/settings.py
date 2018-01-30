@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -123,9 +125,11 @@ STATIC_URL = '/static/'
 
 # RUMAH IOT LEMARI CONFIG
 
-SIDIK_TOKEN_VALIDATION_ENDPOINT = 'https://buo86czlzd.execute-api.ap-southeast-1.amazonaws.com/dev/authorize/token/validate'
+SIDIK_TOKEN_VALIDATION_ENDPOINT = os.environ.get('SIDIK_TOKEN_VALIDATION_ENDPOINT','')
 RUMAHIOT_USERS_PROFILE_TABLE = 'rumahiot_users_profile'
 RUMAHIOT_REGION = 'ap-southeast-1'
 RUMAHIOT_UPLOAD_BUCKET = 'rumahiot-upload'
 
 
+# TODO : Limit cors from accepted site only
+CORS_ORIGIN_ALLOW_ALL = True

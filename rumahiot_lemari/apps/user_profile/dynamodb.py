@@ -1,5 +1,6 @@
 import boto3
 from rumahiot_lemari.settings import RUMAHIOT_REGION,RUMAHIOT_USERS_PROFILE_TABLE
+from datetime import datetime
 
 # DynamoDB client
 def dynamodb_client():
@@ -31,7 +32,8 @@ def update_user_profile(user_uuid,full_name,phone_number):
             'user_uuid': user_uuid,
             'full_name': full_name,
             'phone_number' : phone_number,
-            'profile_image' : get_user_profile(user_uuid)['profile_image']
+            'profile_image' : get_user_profile(user_uuid)['profile_image'],
+            'time_updated' : str(datetime.now().timestamp())
         }
     )
     status = True
@@ -52,7 +54,8 @@ def update_user_profile_picture(user_uuid,profile_picture):
             'user_uuid': user_uuid,
             'full_name': user_profile['full_name'],
             'phone_number': user_profile['phone_number'],
-            'profile_image': profile_picture
+            'profile_image': profile_picture,
+            'time_updated' : str(datetime.now().timestamp())
         }
     )
     status = True
