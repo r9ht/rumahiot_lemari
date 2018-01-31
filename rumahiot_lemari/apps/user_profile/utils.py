@@ -1,41 +1,40 @@
 import hashlib,mimetypes,magic
 
-# return salt(string),hashed_password(string)
-# salt will be used as uuid in the user table
-def password_hasher(salt,password):
-    return hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
-
-# generate error response in dict format
-def error_response_generator(code,message):
-    response = {
-        "error":{
-            "code" : code,
-            "message" : message
+class ResponseGenerator():
+    # generate error response in dict format
+    def error_response_generator(self,code, message):
+        response = {
+            "error": {
+                "code": code,
+                "message": message
+            }
         }
-    }
-    return response
+        return response
 
-# generate data response in dict format
-# input parameter data(dict)
-def data_response_generator(data):
-    response = {
-        "data" : data
-    }
-    return response
-
-# generate error response in dict format
-def success_response_generator(code,message):
-    response = {
-        "success":{
-            "code" : code,
-            "message" : message
+    # generate data response in dict format
+    # input parameter data(dict)
+    def data_response_generator(self,data):
+        response = {
+            "data": data
         }
-    }
-    return response
+        return response
 
-# get object file_type
-# for inmemoryuploadedfile
+    # generate error response in dict format
+    def success_response_generator(self,code, message):
+        response = {
+            "success": {
+                "code": code,
+                "message": message
+            }
+        }
+        return response
 
-def get_file_type(inmemoryuploadedfile):
-    return mimetypes.MimeTypes().types_map_inv[1][magic.from_buffer(inmemoryuploadedfile.read(), mime=True)][0]
+
+class LemariUtils():
+
+    # get object file_type
+    # for inmemoryuploadedfile
+
+    def get_file_type(self,inmemoryuploadedfile):
+        return mimetypes.MimeTypes().types_map_inv[1][magic.from_buffer(inmemoryuploadedfile.read(), mime=True)][0]
 
