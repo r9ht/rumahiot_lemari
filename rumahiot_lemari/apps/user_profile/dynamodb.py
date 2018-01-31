@@ -29,7 +29,7 @@ class LemariDynamoDB():
                 'user_uuid': user_uuid,
                 'full_name': full_name,
                 'phone_number': phone_number,
-                'profile_image': get_user_profile(user_uuid)['profile_image'],
+                'profile_image': self.get_user_profile(user_uuid)['profile_image'],
                 'time_updated': str(datetime.now().timestamp())
             }
         )
@@ -43,7 +43,7 @@ class LemariDynamoDB():
         # keep the error from breaking service by catching the client error in the view
         status = False
         table = self.client.Table(RUMAHIOT_USERS_PROFILE_TABLE)
-        user_profile = get_user_profile(user_uuid)
+        user_profile = self.get_user_profile(user_uuid)
         response = table.put_item(
             Item={
                 'user_uuid': user_uuid,
