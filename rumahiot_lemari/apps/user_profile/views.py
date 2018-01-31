@@ -2,8 +2,8 @@ from django.shortcuts import render,HttpResponse
 import json
 from uuid import uuid4
 from django.views.decorators.csrf import csrf_exempt
-from rumahiot_lemari.apps.user_profile.utils import ResponseGenerator,LemariUtils
-from rumahiot_lemari.apps.sidik_modules.authorization import LemariAuthorization
+from rumahiot_lemari.apps.user_profile.utils import ResponseGenerator,LemariUtils,RequestUtils
+from rumahiot_lemari.apps.sidik_modules.authorization import LemariSidikModule
 from rumahiot_lemari.apps.user_profile.dynamodb import LemariDynamoDB
 from rumahiot_lemari.apps.user_profile.forms import UpdateProfileForm,UpdateProfilePictureForm
 from rumahiot_lemari.apps.user_profile.s3 import S3
@@ -14,15 +14,16 @@ from rumahiot_lemari.settings import RUMAHIOT_UPLOAD_BUCKET,RUMAHIOT_REGION
 def user_profile(request):
 
     rg = ResponseGenerator()
-    auth = LemariAuthorization()
+    auth = LemariSidikModule()
     db= LemariDynamoDB()
+    requtils = RequestUtils()
 
     if request.method != "GET":
         response_data = rg.error_response_generator(400, "Bad request method")
         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
     else:
         try:
-            token = auth.get_access_token(request)
+            token = requtils.get_access_token(request)
         except KeyError:
             response_data = rg.error_response_generator(400, "Please define the authorization header")
             return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
@@ -52,15 +53,16 @@ def user_profile_update(request):
 
     # Lemari classes
     rg = ResponseGenerator()
-    auth = LemariAuthorization()
+    auth = LemariSidikModule()
     db = LemariDynamoDB()
+    requtils = RequestUtils()
 
     if request.method != "POST":
         response_data = rg.error_response_generator(400, "Bad request method")
         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
     else:
         try:
-            token = auth.get_access_token(request)
+            token = requtils.get_access_token(request)
         except KeyError:
             response_data = rg.error_response_generator(400, "Please define the authorization header")
             return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
@@ -110,17 +112,18 @@ def user_profile_picture_update(request):
 
     # Lemari classes
     rg = ResponseGenerator()
-    auth = LemariAuthorization()
+    auth = LemariSidikModule()
     utils = LemariUtils()
     db = LemariDynamoDB()
     s3 = S3()
+    requtils = RequestUtils()
 
     if request.method != "POST":
         response_data = rg.error_response_generator(400, "Bad request method")
         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
     else:
         try:
-            token = auth.get_access_token(request)
+            token = requtils.get_access_token(request)
         except KeyError:
             response_data = rg.error_response_generator(400, "Please define the authorization header")
             return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
