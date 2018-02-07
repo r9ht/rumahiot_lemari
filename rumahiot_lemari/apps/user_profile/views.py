@@ -84,22 +84,15 @@ def user_profile_update(request):
                             form.cleaned_data['phone_number'] = '-'
                         # catch the exception if DynamoDB client got error
                         try :
-                            update_status = db.update_user_profile(user['user_uuid'], form.cleaned_data['full_name'],
+                            db.update_user_profile(user['user_uuid'], form.cleaned_data['full_name'],
                                                                 form.cleaned_data['phone_number'])
                         except :
                             response_data = rg.error_response_generator(500, "Internal server error")
                             return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
                         else:
-                            # always true
-                            if update_status:
-                                response_data = rg.success_response_generator(200, "User profile successfully updated")
-                                return HttpResponse(json.dumps(response_data), content_type="application/json",
-                                                    status=200)
-                            else:
-                                # to catch unknown error
-                                response_data = rg.error_response_generator(500, "Internal server error")
-                                return HttpResponse(json.dumps(response_data), content_type="application/json",
-                                                    status=500)
+                            response_data = rg.success_response_generator(200, "User profile successfully updated")
+                            return HttpResponse(json.dumps(response_data), content_type="application/json",
+                                                status=200)
                     else:
                         response_data = rg.error_response_generator(400,"Invalid or missing parameter submitted")
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
@@ -151,7 +144,7 @@ def user_profile_picture_update(request):
                         else:
                             file_location = 'https://s3-{}.amazonaws.com/{}/{}'.format(RUMAHIOT_REGION,RUMAHIOT_UPLOAD_BUCKET,target_location)
                             try:
-                                db_response = db.update_user_profile_picture(user['user_uuid'],file_location)
+                                db.update_user_profile_picture(user['user_uuid'],file_location)
                             except:
                                 # catch unknown error
                                 response_data = rg.error_response_generator(500, "Internal server error")

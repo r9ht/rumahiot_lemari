@@ -19,40 +19,35 @@ class LemariDynamoDB():
 
     # update user profile data
     # input parameter : user_uuid(string) , full_name(string), phone_number(string)
-    # return : status(boolean)
     def update_user_profile(self,user_uuid, full_name, phone_number):
         # keep the error from breaking service by catching the client error in the view
-        status = False
         table = self.client.Table(RUMAHIOT_USERS_PROFILE_TABLE)
-        response = table.put_item(
-            Item={
-                'user_uuid': user_uuid,
-                'full_name': full_name,
-                'phone_number': phone_number,
-                'profile_image': self.get_user_profile(user_uuid)['profile_image'],
-                'time_updated': str(datetime.now().timestamp())
-            }
+        response = table.update_item(
+            Key = {
+              'user_uuid' : user_uuid
+            },
+            UpdateExpression="set full_name=:f, phone_number=:p, time_updated=:t",
+            ExpressionAttributeValues={
+                ':f': full_name,
+                ':p': phone_number,
+                ':t': str(datetime.now().timestamp())
+            },
+            ReturnValues="UPDATED_NEW"
         )
-        status = True
-        return status
 
     # update user profile picture
     # input parameter : user_uuid(string) , profile_image(string)
-    # return : status(boolean)
     def update_user_profile_picture(self,user_uuid, profile_picture):
         # keep the error from breaking service by catching the client error in the view
-        status = False
         table = self.client.Table(RUMAHIOT_USERS_PROFILE_TABLE)
-        user_profile = self.get_user_profile(user_uuid)
-        response = table.put_item(
-            Item={
-                'user_uuid': user_uuid,
-                'full_name': user_profile['full_name'],
-                'phone_number': user_profile['phone_number'],
-                'profile_image': profile_picture,
-                'time_updated': str(datetime.now().timestamp())
-            }
+        response = table.update_item(
+            Key={
+                'user_uuid': user_uuid
+            },
+            UpdateExpression="set profile_picture=:p, time_updated=:t",
+            ExpressionAttributeValues={
+                ':p' : profile_picture,
+                ':t': str(datetime.now().timestamp())
+            },
+            ReturnValues="UPDATED_NEW"
         )
-        status = True
-        return status
-
