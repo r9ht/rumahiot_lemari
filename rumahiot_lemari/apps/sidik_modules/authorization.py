@@ -14,23 +14,26 @@ class LemariSidikModule():
     #     'error' : error(string)
     # }
 
-    def get_user_uuid(self,token):
+    def get_user_data(self,token):
         data = {}
         # define the auth payload
         payload = {
-            'token': token
+            'token': token,
+            'email' : '1'
         }
         response = requests.post(SIDIK_TOKEN_VALIDATION_ENDPOINT, data=payload)
         # check if the request success
         if response.status_code == 200:
             # return the user uuid
             data['user_uuid'] = response.json()['data']['payload']['user_uuid']
+            data['email'] = response.json()['data']['payload']['email']
             data['error'] = None
             return data
         else:
             # return the error
             data['user_uuid'] = None
             data['error'] = response.json()['error']['message']
+            data['email'] = None
             return data
 
 

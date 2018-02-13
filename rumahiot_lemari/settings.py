@@ -126,9 +126,9 @@ STATIC_URL = '/static/'
 # RUMAH IOT LEMARI CONFIG
 
 SIDIK_TOKEN_VALIDATION_ENDPOINT = os.environ.get('SIDIK_TOKEN_VALIDATION_ENDPOINT','')
-RUMAHIOT_USERS_PROFILE_TABLE = 'rumahiot_users_profile'
-RUMAHIOT_REGION = 'ap-southeast-1'
-RUMAHIOT_UPLOAD_BUCKET = 'rumahiot-upload'
+RUMAHIOT_USERS_PROFILE_TABLE = os.environ.get('LEMARI_PROFILE_TABLE','')
+RUMAHIOT_REGION = os.environ.get('RUMAHIOT_REGION','')
+RUMAHIOT_UPLOAD_BUCKET = os.environ.get('RUMAHIOT_UPLOAD_BUCKET','')
 
 
 # TODO : Limit cors from accepted site only

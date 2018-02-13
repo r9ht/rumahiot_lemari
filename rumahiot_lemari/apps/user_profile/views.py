@@ -32,11 +32,8 @@ def user_profile(request):
                 response_data = rg.error_response_generator(400, token['error'])
                 return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
             else:
-                user = auth.get_user_uuid(token['token'])
-                if user['user_uuid'] == None:
-                    response_data = rg.error_response_generator(400, user['error'])
-                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
-                else:
+                user = auth.get_user_data(token['token'])
+                if user['user_uuid'] != None:
                     try:
                         user_profile = db.get_user_profile(user['user_uuid'])
                     except:
@@ -44,8 +41,15 @@ def user_profile(request):
                         response_data = rg.error_response_generator(500, "Internal server error")
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=500)
                     else:
+                        # add aditional data
+                        user_profile['email'] = user['email']
                         response_data = rg.data_response_generator(user_profile)
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
+
+                else:
+                    response_data = rg.error_response_generator(400, user['error'])
+                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+
 
 
 @csrf_exempt
@@ -71,7 +75,7 @@ def user_profile_update(request):
                 response_data = rg.error_response_generator(400, token['error'])
                 return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
             else:
-                user = auth.get_user_uuid(token['token'])
+                user = auth.get_user_data(token['token'])
                 if user['user_uuid'] == None:
                     response_data = rg.error_response_generator(400, user['error'])
                     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
@@ -125,7 +129,7 @@ def user_profile_picture_update(request):
                 response_data = rg.error_response_generator(400, token['error'])
                 return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
             else:
-                user = auth.get_user_uuid(token['token'])
+                user = auth.get_user_data(token['token'])
                 if user['user_uuid'] == None:
                     response_data = rg.error_response_generator(400, user['error'])
                     return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
