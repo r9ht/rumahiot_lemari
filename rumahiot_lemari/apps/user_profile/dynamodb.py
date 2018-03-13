@@ -37,16 +37,16 @@ class LemariDynamoDB():
 
     # update user profile picture
     # input parameter : user_uuid(string) , profile_image(string)
-    def update_user_profile_picture(self,user_uuid, profile_picture):
+    def update_user_profile_image(self,user_uuid, profile_image):
         # keep the error from breaking service by catching the client error in the view
         table = self.client.Table(RUMAHIOT_USERS_PROFILE_TABLE)
         response = table.update_item(
             Key={
                 'user_uuid': user_uuid
             },
-            UpdateExpression="set profile_picture=:p, time_updated=:t",
+            UpdateExpression="set profile_image=:p, time_updated=:t",
             ExpressionAttributeValues={
-                ':p' : profile_picture,
+                ':p' : profile_image,
                 ':t': str(datetime.now().timestamp())
             },
             ReturnValues="UPDATED_NEW"

@@ -15,11 +15,11 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.conf.urls import url
-from rumahiot_lemari.apps.user_profile.views import user_profile,user_profile_update,user_profile_picture_update
+from rumahiot_lemari.apps.user_profile.views import user_profile,user_profile_update,user_profile_image_update
 
 urlpatterns = [
     url(r'^get$', user_profile,name='user_profile' ),
     url(r'^update$',  user_profile_update,name='user_profile_update' ),
-    url(r'^picture/update$',user_profile_picture_update,name='user_profile_picture_update' ),
+    url(r'^picture/update$',user_profile_image_update,name='user_profile_picture_update' ),
 ]
 
