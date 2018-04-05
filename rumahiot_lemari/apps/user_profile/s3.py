@@ -1,7 +1,7 @@
 import boto3
 from rumahiot_lemari.settings import RUMAHIOT_REGION,RUMAHIOT_USERS_PROFILE_TABLE
 
-class S3():
+class S3:
     # todo : add target bucket to initialization
     def __init__(self):
         self.client = boto3.client('s3', region_name=RUMAHIOT_REGION)

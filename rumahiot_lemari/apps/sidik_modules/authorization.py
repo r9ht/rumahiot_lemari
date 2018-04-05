@@ -2,7 +2,7 @@
 import requests
 from rumahiot_lemari.settings import SIDIK_TOKEN_VALIDATION_ENDPOINT
 
-class LemariSidikModule():
+class LemariSidikModule:
     # validate jwt token using Sidik service and return user uuid if the token is valid
     # input parameter : token (string)
     # return :  data['user_uuid'] = user_uuid, when the token is valid (string)

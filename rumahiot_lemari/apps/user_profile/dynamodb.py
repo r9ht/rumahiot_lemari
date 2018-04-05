@@ -2,7 +2,7 @@ import boto3
 from rumahiot_lemari.settings import RUMAHIOT_REGION,RUMAHIOT_USERS_PROFILE_TABLE
 from datetime import datetime
 
-class LemariDynamoDB():
+class LemariDynamoDB:
 
     def __init__(self):
         self.client = boto3.resource('dynamodb', region_name=RUMAHIOT_REGION)
