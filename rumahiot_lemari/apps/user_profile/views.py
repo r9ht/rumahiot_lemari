@@ -25,12 +25,12 @@ def user_profile(request):
         try:
             token = requtils.get_access_token(request)
         except KeyError:
-            response_data = rg.error_response_generator(400, "Please define the authorization header")
-            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+            response_data = rg.error_response_generator(403, "Please define the authorization header")
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
         else:
             if token['token'] is None:
-                response_data = rg.error_response_generator(400, token['error'])
-                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                response_data = rg.error_response_generator(403, token['error'])
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
             else:
                 user = auth.get_user_data(token['token'])
                 if user['user_uuid'] != None:
@@ -47,10 +47,8 @@ def user_profile(request):
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
 
                 else:
-                    response_data = rg.error_response_generator(400, user['error'])
-                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
-
-
+                    response_data = rg.error_response_generator(403, user['error'])
+                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
 
 @csrf_exempt
 def user_profile_update(request):
@@ -68,17 +66,17 @@ def user_profile_update(request):
         try:
             token = requtils.get_access_token(request)
         except KeyError:
-            response_data = rg.error_response_generator(400, "Please define the authorization header")
-            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+            response_data = rg.error_response_generator(403, "Please define the authorization header")
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
         else:
             if token['token'] is None:
-                response_data = rg.error_response_generator(400, token['error'])
-                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                response_data = rg.error_response_generator(403, token['error'])
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
             else:
                 user = auth.get_user_data(token['token'])
                 if user['user_uuid'] == None:
-                    response_data = rg.error_response_generator(400, user['error'])
-                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                    response_data = rg.error_response_generator(403, user['error'])
+                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
                 else:
                     form = UpdateProfileForm(request.POST)
                     if form.is_valid():
@@ -108,8 +106,6 @@ def user_profile_update(request):
                         response_data = rg.error_response_generator(400,"Invalid or missing parameter submitted")
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
-
-
 # todo : merge this thing with the profile update ?
 @csrf_exempt
 def user_profile_image_update(request):
@@ -128,17 +124,17 @@ def user_profile_image_update(request):
         try:
             token = requtils.get_access_token(request)
         except KeyError:
-            response_data = rg.error_response_generator(400, "Please define the authorization header")
-            return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+            response_data = rg.error_response_generator(403, "Please define the authorization header")
+            return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
         else:
             if token['token'] is None:
-                response_data = rg.error_response_generator(400, token['error'])
-                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                response_data = rg.error_response_generator(403, token['error'])
+                return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
             else:
                 user = auth.get_user_data(token['token'])
                 if user['user_uuid'] == None:
-                    response_data = rg.error_response_generator(400, user['error'])
-                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                    response_data = rg.error_response_generator(403, user['error'])
+                    return HttpResponse(json.dumps(response_data), content_type="application/json", status=403)
                 else:
                     form = UpdateProfilePictureForm(request.POST,request.FILES)
                     if form.is_valid():
