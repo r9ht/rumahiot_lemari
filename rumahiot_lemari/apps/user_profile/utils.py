@@ -1,4 +1,5 @@
 import hashlib,mimetypes,magic
+from rumahiot_lemari.settings import VALID_MONTHS
 
 class ResponseGenerator():
     # generate error response in dict format
@@ -37,6 +38,15 @@ class LemariUtils():
 
     def get_file_type(self,inmemoryuploadedfile):
         return mimetypes.MimeTypes().types_map_inv[1][magic.from_buffer(inmemoryuploadedfile.read(), mime=True)][0]
+
+    def integer_check(self, value):
+        try :
+            int(value)
+        except ValueError:
+            return False
+        else:
+            return True
+
 
 class RequestUtils():
     # get access token from authorization header

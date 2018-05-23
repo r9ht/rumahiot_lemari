@@ -15,11 +15,10 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.conf.urls import url
-from rumahiot_lemari.apps.user_profile.views import user_profile,user_profile_update,user_profile_image_update
+from rumahiot_lemari.apps.dashboard.views import add_device_dashboard_chart, get_device_dashboard_chart, remove_device_dashboard_chart
 
 urlpatterns = [
-    url(r'^get$', user_profile,name='user_profile' ),
-    url(r'^update$',  user_profile_update,name='user_profile_update' ),
-    url(r'^picture/update$',user_profile_image_update,name='user_profile_picture_update' ),
+    url(r'^chart/list$', get_device_dashboard_chart,name='get_device_dashboard_chart' ),
+    url(r'^chart/add$', add_device_dashboard_chart,name='add_device_dashboard_chart' ),
+    url(r'^chart/remove/(?P<user_dashboard_chart_uuid>.+)$', remove_device_dashboard_chart,name='remove_device_dashboard_chart' )
 ]
-

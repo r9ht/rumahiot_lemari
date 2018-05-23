@@ -7,7 +7,8 @@ from rumahiot_lemari.settings import \
     RUMAHIOT_GUDANG_MONGO_PORT, \
     RUMAHIOT_GUDANG_MONGO_USERNAME, \
     RUMAHIOT_LEMARI_USER_WIFI_CONNECTIONS_COLLECTION, \
-    RUMAHIOT_GUDANG_USERS_DEVICE_COLLECTION
+    RUMAHIOT_GUDANG_USERS_DEVICE_COLLECTION, \
+    RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION
 
 from bson.json_util import dumps
 import json, datetime
@@ -87,3 +88,39 @@ class LemariMongoDB:
         col.remove({
             'user_wifi_connection_uuid': user_wifi_connection_uuid
         })
+
+    # Get device detail using device_uuid and user uuid
+    # input parameter : device_uuid(string), user_uuid (string)
+    def get_device_by_device_uuid(self, device_uuid, user_uuid):
+        db = self.client[RUMAHIOT_GUDANG_DATABASE]
+        col = db[RUMAHIOT_GUDANG_USERS_DEVICE_COLLECTION]
+        result = col.find_one({'device_uuid': device_uuid, 'user_uuid': user_uuid})
+        return result
+
+    # Put user dashboard chart
+    def put_user_device_dashboard_chart(self, data):
+        result = self.put_data(database=RUMAHIOT_GUDANG_DATABASE, collection=RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION, data=data)
+
+    # Get all user device dashboard chart
+    def get_dashboard_chart_by_user_uuid(self, user_uuid):
+        db = self.client[RUMAHIOT_GUDANG_DATABASE]
+        col = db[RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION]
+        result = col.find({'user_uuid': user_uuid})
+        return result
+
+    # Remove chart with specified uuid
+    def remove_chart_by_chart_uuid(self, user_dashboard_chart_uuid):
+        db = self.client[RUMAHIOT_GUDANG_DATABASE]
+        col = db[RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION]
+        col.remove({
+            'user_dashboard_chart_uuid': user_dashboard_chart_uuid
+        })
+
+    def get_dashboard_chart_by_uuid(self, user_dashboard_chart_uuid, user_uuid):
+        db = self.client[RUMAHIOT_GUDANG_DATABASE]
+        col = db[RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION]
+        result = col.find_one({
+            'user_dashboard_chart_uuid': user_dashboard_chart_uuid,
+            'user_uuid': user_uuid
+        })
+        return result
