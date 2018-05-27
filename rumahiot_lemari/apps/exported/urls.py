@@ -1,4 +1,4 @@
-"""rumahiot_lemari URL Configuration
+"""rumahiot_sidik URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -13,15 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-
 # from django.contrib import admin
-from django.conf.urls import url, include
-
+from django.conf.urls import url
+from rumahiot_lemari.apps.exported.views import get_device_exported_xlsx
 urlpatterns = [
-    url(r'^profile/', include('rumahiot_lemari.apps.user_profile.urls')),
-    url(r'^network/connection/', include('rumahiot_lemari.apps.network_connection.urls')),
-    url(r'^dashboard/', include('rumahiot_lemari.apps.dashboard.urls')),
-    url(r'^exported/', include('rumahiot_lemari.apps.exported.urls')),
+    url(r'^device/xlsx/list$',get_device_exported_xlsx,name='get_device_exported_xlsx' )
 ]
+

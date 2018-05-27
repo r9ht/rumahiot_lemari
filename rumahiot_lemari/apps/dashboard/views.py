@@ -57,7 +57,7 @@ def add_device_dashboard_chart(request) :
                                         }
                                         # put the data into db
                                         db.put_user_device_dashboard_chart(data=data)
-                                        response_data = rg.success_response_generator(200, "User device dashboard chart successfully added")
+                                        response_data = rg.success_response_generator(200, "Device dashboard chart successfully added")
                                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
                                     else:
                                         response_data = rg.error_response_generator(400, 'Hour must be larger than 1 and less than 168')
@@ -115,7 +115,6 @@ def get_device_dashboard_chart(request):
                 if user['user_uuid'] != None:
                     device_dashboard_charts = db.get_dashboard_chart_by_user_uuid(user_uuid=user['user_uuid'])
                     data = {
-                        'user_uuid' : user['user_uuid'],
                         'device_dashboard_charts': [],
                         'device_dashboard_chart_count': device_dashboard_charts.count(True)
                     }

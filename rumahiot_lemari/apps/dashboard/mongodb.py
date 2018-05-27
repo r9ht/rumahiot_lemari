@@ -8,7 +8,8 @@ from rumahiot_lemari.settings import \
     RUMAHIOT_GUDANG_MONGO_USERNAME, \
     RUMAHIOT_LEMARI_USER_WIFI_CONNECTIONS_COLLECTION, \
     RUMAHIOT_GUDANG_USERS_DEVICE_COLLECTION, \
-    RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION
+    RUMAHIOT_LEMARI_USER_DASHBOARD_CHARTS_COLLECTION, \
+    RUMAHIOT_LEMARI_USER_EXPORTED_XLSX_COLLECTION
 
 from bson.json_util import dumps
 import json, datetime
@@ -123,4 +124,13 @@ class LemariMongoDB:
             'user_dashboard_chart_uuid': user_dashboard_chart_uuid,
             'user_uuid': user_uuid
         })
+        return result
+
+    # get user exported devcie data
+    def get_user_exported_xlsx(self, user_uuid):
+        db = self.client[RUMAHIOT_GUDANG_DATABASE]
+        col = db[RUMAHIOT_LEMARI_USER_EXPORTED_XLSX_COLLECTION]
+        result = col.find({
+            'user_uuid': user_uuid
+        }).sort([("time_updated", -1)])
         return result
