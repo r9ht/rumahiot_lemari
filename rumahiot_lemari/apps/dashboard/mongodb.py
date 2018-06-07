@@ -39,7 +39,8 @@ class LemariMongoDB:
         db = self.client[RUMAHIOT_GUDANG_DATABASE]
         col = db[RUMAHIOT_LEMARI_USER_WIFI_CONNECTIONS_COLLECTION]
         result = col.find({
-            'user_uuid' : user_uuid
+            'user_uuid' : user_uuid,
+            'removed': False
         })
         return result
 
@@ -56,7 +57,8 @@ class LemariMongoDB:
         col = db[RUMAHIOT_LEMARI_USER_WIFI_CONNECTIONS_COLLECTION]
         result = col.find_one({
             'user_uuid': user_uuid,
-            'user_wifi_connection_uuid': user_wifi_connection_uuid
+            'user_wifi_connection_uuid': user_wifi_connection_uuid,
+            'removed': False
         })
         return result
 
@@ -76,7 +78,8 @@ class LemariMongoDB:
         col = db[RUMAHIOT_GUDANG_USERS_DEVICE_COLLECTION]
         result = col.find({
             'user_uuid' : user_uuid,
-            'user_wifi_connection_uuid': user_wifi_connection_uuid
+            'user_wifi_connection_uuid': user_wifi_connection_uuid,
+            'removed': False
         })
 
         return result
@@ -86,9 +89,8 @@ class LemariMongoDB:
     def remove_user_wifi_connection_by_uuid(self, user_wifi_connection_uuid):
         db = self.client[RUMAHIOT_GUDANG_DATABASE]
         col = db[RUMAHIOT_LEMARI_USER_WIFI_CONNECTIONS_COLLECTION]
-        col.remove({
-            'user_wifi_connection_uuid': user_wifi_connection_uuid
-        })
+        col.update_one({'user_wifi_connection_uuid': user_wifi_connection_uuid
+        }, {'$set': {'removed': True}})
 
     # Get device detail using device_uuid and user uuid
     # input parameter : device_uuid(string), user_uuid (string)

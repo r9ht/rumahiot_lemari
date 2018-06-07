@@ -119,7 +119,8 @@ def add_user_wifi_connection(request):
                             'ssid': form.cleaned_data['ssid'],
                             'security_enabled': security_enabled,
                             'password': password,
-                            'time_updated': datetime.now().timestamp()
+                            'time_updated': datetime.now().timestamp(),
+                            'removed': False
                         }
 
                         # Put in db

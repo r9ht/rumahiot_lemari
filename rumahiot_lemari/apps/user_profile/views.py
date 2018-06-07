@@ -95,7 +95,7 @@ def user_profile_update(request):
                                 return HttpResponse(json.dumps(response_data), content_type="application/json",
                                                     status=500)
                             else:
-                                response_data = rg.success_response_generator(200, "User profile successfully updated")
+                                response_data = rg.success_response_generator(200, "Profile successfully updated")
                                 return HttpResponse(json.dumps(response_data), content_type="application/json",
                                                     status=200)
                         else:
@@ -157,12 +157,11 @@ def user_profile_image_update(request):
                                 return HttpResponse(json.dumps(response_data), content_type="application/json",
                                                     status=500)
                             else:
-                                response_data = rg.success_response_generator(200, "User profile picture successfully updated")
+                                response_data = rg.success_response_generator(200, "Profile picture successfully updated")
                                 return HttpResponse(json.dumps(response_data), content_type="application/json",
                                                     status=200)
-
                     else:
-                        response_data = rg.error_response_generator(400,"Invalid or missing parameter submitted")
+                        response_data = rg.error_response_generator(400,"Invalid image format")
                         return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
 
 
